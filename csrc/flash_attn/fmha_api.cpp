@@ -558,7 +558,7 @@ mha_bwd(const at::Tensor &dout,  // total_q x num_heads, x head_size
     if (attn_bias.has_value()) {
         // compare block reduce
         auto size = attn_bias->sizes();
-        dbias = ds.reshape({ -1, size[0], size[1], size[2], size[3] }).sum({ 0 });
+        dbias = ds.reshape({ size[0], -1, size[1], size[2], size[3] }).sum({ 1 });
         result.push_back( dbias );
     }
     return result;
